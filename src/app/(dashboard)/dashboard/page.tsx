@@ -3,11 +3,22 @@
 import React, { useState } from 'react';
 import { fetchSenders, Sender } from '@/lib/mockData';
 import SenderCard from '@/components/SenderCard';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"
 
 export default function Home() {
   const [senders, setSenders] = useState<Sender[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [scanned, setScanned] = useState(false);
+  const [openCompleteDialog, setOpenCompleteDialog] = useState(false);
 
   const handleScan = async () => {
     setIsLoading(true);
@@ -19,55 +30,46 @@ export default function Home() {
   };
 
   const handleUnsubscribe = (id: string) => {
-    // In a real app, this would call an API
-    console.log(`Unsubscribing from sender ${id} `);
-
     // Optimistic UI update
     setSenders(current => current.filter(s => s.id !== id));
 
-    // Optional: Show toast or feedback
-    alert("Unsubscribed successfully!");
+    // Check if empty
+    if (senders.length <= 1) { // 1 because current hasn't updated in state yet strictly speaking, but filter returns new array. Logic check.
+      // Actually simpler: we just unsubscribed. If array is empty, show 'All Clean'. 
+      // We'll let the render handle "All Clean" UI.
+      setOpenCompleteDialog(true);
+    }
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <header style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="max-w-4xl mx-auto">
+      <header className="mb-8 flex justify-between items-center">
         <div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--foreground)' }}>Inbox Cleanup</h1>
-          <p style={{ color: '#86868b', fontSize: '1.1rem' }}>Review and unsubscribe from unwanted emails.</p>
+          <h1 className="text-3xl font-bold mb-2 text-foreground">Inbox Cleanup</h1>
+          <p className="text-muted-foreground text-lg">Review and unsubscribe from unwanted emails.</p>
         </div>
-        <button
+        <Button
           onClick={handleScan}
           disabled={isLoading}
-          style={{
-            backgroundColor: 'var(--primary)',
-            color: 'white',
-            border: 'none',
-            padding: '0.75rem 1.5rem',
-            borderRadius: '999px',
-            fontWeight: 600,
-            cursor: isLoading ? 'not-allowed' : 'pointer',
-            fontSize: '0.9rem',
-            opacity: isLoading ? 0.7 : 1,
-            transition: 'opacity 0.2s'
-          }}
+          size="lg"
+          className="rounded-full font-semibold"
         >
           {isLoading ? 'Scanning...' : 'Scan Inbox'}
-        </button>
+        </Button>
       </header>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+      <div className="flex flex-col gap-4">
         {!scanned && (
-          <div style={{ padding: '4rem 2rem', textAlign: 'center', backgroundColor: 'var(--card-bg)', borderRadius: '12px', border: '1px solid var(--border)' }}>
-            <p style={{ color: '#86868b', fontSize: '1.1rem' }}>Ready to declutter? Click "Scan Inbox" to find subscriptions.</p>
-          </div>
+          <Card className="p-16 text-center border-dashed border-2">
+            <p className="text-muted-foreground text-lg">Ready to declutter? Click "Scan Inbox" to find subscriptions.</p>
+          </Card>
         )}
 
         {scanned && senders.length === 0 && (
-          <div style={{ padding: '4rem 2rem', textAlign: 'center', backgroundColor: 'var(--card-bg)', borderRadius: '12px', border: '1px solid var(--border)' }}>
-            <p style={{ color: 'var(--foreground)', fontSize: '1.2rem', fontWeight: 600 }}>All Clean! 🎉</p>
-            <p style={{ color: '#86868b', marginTop: '0.5rem' }}>No active subscriptions found.</p>
-          </div>
+          <Card className="p-16 text-center border-dashed border-2 bg-muted/20">
+            <p className="text-2xl font-bold text-foreground mb-2">All Clean! 🎉</p>
+            <p className="text-muted-foreground">No active subscriptions found.</p>
+          </Card>
         )}
 
         {senders.map(sender => (
@@ -78,7 +80,20 @@ export default function Home() {
           />
         ))}
       </div>
+
+      <Dialog open={openCompleteDialog} onOpenChange={setOpenCompleteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Unsubscribed Successfully</DialogTitle>
+            <DialogDescription>
+              You have successfully unsubscribed from this sender.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={() => setOpenCompleteDialog(false)}>Continue</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
-

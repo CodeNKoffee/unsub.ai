@@ -106,7 +106,8 @@
 .particle {
   position: absolute;
   font-size: 1.5rem;
-  opacity: 0.15;
+  opacity: 0.3;
+  /* Increased for Light Mode visibility */
   animation: float 10s infinite ease-in-out;
   color: var(--foreground);
 }
@@ -142,7 +143,7 @@
   left: 50%;
   animation-duration: 20s;
   font-size: 3rem;
-  opacity: 0.05;
+  opacity: 0.1;
 }
 
 .hero h1 {
@@ -156,7 +157,8 @@
   /* Buffer for descenders */
   color: var(--foreground);
   /* Fallback */
-  background: linear-gradient(180deg, var(--foreground) 0%, rgba(128, 128, 128, 0.8) 100%);
+  background: linear-gradient(180deg, var(--foreground) 0%, rgba(128, 128, 128, 0.5) 100%);
+  /* Adjusted gradient for better text visibility in both modes */
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -222,8 +224,8 @@
 .step {
   padding: 2rem;
   border-radius: 12px;
-  border: 1px solid var(--border);
-  background: white;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
   transition: box-shadow 0.2s;
 }
 
@@ -234,7 +236,8 @@
 .stepNumber {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #888;
+  color: var(--foreground);
+  opacity: 0.6;
   margin-bottom: 0.5rem;
   display: block;
 }
@@ -243,19 +246,21 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
+  color: var(--foreground);
 }
 
 .stepDesc {
-  color: #666;
+  color: var(--foreground);
+  opacity: 0.8;
   line-height: 1.5;
 }
 
 /* Visual / Globe Placeholder */
 .visualContainer {
   height: 400px;
-  background: #fafafa;
+  background: var(--card-bg);
   border-radius: 24px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--card-border);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -267,10 +272,10 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--card-border);
   position: relative;
   animation: rotate 20s linear infinite;
-  background: radial-gradient(circle at 30% 30%, #fff, #f0f0f0);
+  background: radial-gradient(circle at 30% 30%, var(--background), var(--card-bg));
   box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -280,7 +285,7 @@
   left: 50%;
   width: 300px;
   height: 300px;
-  border: 1px dashed rgba(0, 0, 0, 0.1);
+  border: 1px dashed var(--card-border);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   animation: spin 30s linear infinite reverse;
@@ -301,7 +306,8 @@
 .ctaSection {
   text-align: center;
   padding: 6rem 0;
-  background: #f9f9f9;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 24px;
   margin: 4rem 0;
 }
@@ -310,6 +316,7 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
+  color: var(--foreground);
 }
 
 /* Footer */

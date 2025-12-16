@@ -2,27 +2,13 @@ import Link from "next/link";
 import styles from "./Landing.module.css";
 import ThemeToggle from "@/components/ThemeToggle";
 
+import Navbar from "@/components/Navbar";
+
 export default function LandingPage() {
   return (
     <div className={styles.pageWrapper}>
       {/* Navbar */}
-      <nav className={styles.navbar}>
-        <div className={`${styles.container} ${styles.navContent}`}>
-          <div className={styles.logo}>
-            <span style={{ fontSize: '1.5rem' }}>▼</span> Unsub AI
-          </div>
-          <div className={styles.navLinks}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <a href="#how-it-works">How it works</a>
-              <a href="#pricing">Pricing</a>
-              <ThemeToggle />
-              <Link href="/dashboard">
-                <button className={styles.navButton}>Get Started</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
       <main className={styles.container}>

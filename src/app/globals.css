@@ -1,18 +1,61 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
 :root {
   /* Common */
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --radius: 12px;
 
-  /* Light Mode (Silver/Apple) */
+  /* Light Mode (Silver/Apple/ManyPI) */
+  --background: 0 0% 99%;
+  /* #fdfdfd */
+  --foreground: 220 13% 18%;
+  /* #374151 - using HSL for consistency with shadcn if needed, but let's stick to hex values mapped if possible, or HSL approximations */
+  /* Actually Shadcn uses HSL usually, but v4 + CSS vars can take anything. Let's use the explicit values I had before but assigned to these keys */
+
   --background: #fdfdfd;
   --foreground: #111827;
 
-  --card-bg: rgba(255, 255, 255, 0.8);
+  --card: rgba(255, 255, 255, 0.8);
+  --card-foreground: #111827;
+  --card-bg: var(--card);
+  /* Alias for backward compat */
   --card-border: rgba(0, 0, 0, 0.08);
 
-  --primary: #111827;
-  --primary-fg: #ffffff;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
 
+  --primary: #111827;
+  --primary-foreground: #ffffff;
+  --primary-fg: var(--primary-foreground);
+
+  --secondary: #f3f4f6;
+  --secondary-foreground: #111827;
+
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
+
+  --accent: #f3f4f6;
+  --accent-foreground: #111827;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #111827;
+
+  --radius: 0.75rem;
+
+  --chart-1: #e76e50;
+  --chart-2: #2a9d8f;
+  --chart-3: #264653;
+  --chart-4: #f4a261;
+  --chart-5: #e9c46a;
+
+  /* Custom Gradients */
   --accent-gradient: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%);
   --hero-gradient: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.03) 0%, rgba(255, 255, 255, 0) 70%);
 }
@@ -22,16 +65,43 @@
   --background: #050505;
   --foreground: #f3f4f6;
 
-  --card-bg: rgba(20, 20, 20, 0.6);
+  --card: rgba(20, 20, 20, 0.6);
+  --card-foreground: #f3f4f6;
+  --card-bg: var(--card);
   --card-border: rgba(255, 255, 255, 0.1);
 
+  --popover: #0a0a0a;
+  --popover-foreground: #f3f4f6;
+
   --primary: #f3f4f6;
-  --primary-fg: #000000;
+  --primary-foreground: #000000;
+  --primary-fg: var(--primary-foreground);
+
+  --secondary: #1f2937;
+  --secondary-foreground: #f3f4f6;
+
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
+
+  --accent: #1f2937;
+  --accent-foreground: #f3f4f6;
+
+  --destructive: #7f1d1d;
+  --destructive-foreground: #f3f4f6;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #d1d5db;
+
+  --chart-1: #22005c;
+  --chart-2: #e76e50;
+  --chart-3: #2a9d8f;
+  --chart-4: #264653;
+  --chart-5: #f4a261;
 
   --accent-gradient: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
   --hero-gradient: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
 }
-
 
 html,
 body {
@@ -41,8 +111,6 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -58,4 +126,55 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
