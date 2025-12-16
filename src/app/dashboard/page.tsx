@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckSquare, Square, Trash2, AlertTriangle, X } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import SenderCard from '@/components/SenderCard';
-import { initialSenders } from '@/lib/mockData';
+import { MOCK_SENDERS } from '@/lib/mockData';
 import styles from './Dashboard.module.css';
 
 // Mock Stats Data
@@ -19,7 +19,7 @@ type FilterType = 'All' | 'Promotion' | 'Newsletter' | 'Update';
 
 export default function DashboardPage() {
   const [filter, setFilter] = useState<FilterType>('All');
-  const [senders, setSenders] = useState(initialSenders);
+  const [senders, setSenders] = useState(MOCK_SENDERS);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [batchSize, setBatchSize] = useState(10);
 
