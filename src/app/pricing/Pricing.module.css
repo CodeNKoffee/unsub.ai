@@ -1,0 +1,274 @@
+/* Reuse core page structure from Landing */
+.pageWrapper {
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.hero {
+  padding: 8rem 0 4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: var(--hero-gradient);
+  /* Use the same gradient as Landing */
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  padding-bottom: 0.2rem;
+  color: var(--foreground);
+  background: linear-gradient(180deg, var(--foreground) 0%, rgba(128, 128, 128, 0.5) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: var(--foreground);
+  opacity: 0.7;
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.8s ease-out 0.1s backwards;
+}
+
+/* Toggle Switcher */
+.toggleContainer {
+  display: inline-flex;
+  background: var(--secondary);
+  padding: 0.3rem;
+  border-radius: 99px;
+  position: relative;
+  margin-bottom: 3rem;
+  border: 1px solid var(--border);
+  animation: fadeUp 0.8s ease-out 0.2s backwards;
+}
+
+.toggleBtn {
+  position: relative;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 99px;
+  border: none;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s ease;
+  min-width: 100px;
+}
+
+.toggleBtn[data-active="true"] {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* Framer Motion will handle the background pill, 
+   but we need a container for relative positioning */
+
+/* Pricing Card */
+.pricingCard {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  /* Soft premium shadow */
+  animation: fadeUp 0.8s ease-out 0.3s backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Featured/Popular Badge (optional) */
+.popularBadge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: var(--primary-fg);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardHeader h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+.cardHeader p {
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+  margin-bottom: 2rem;
+  opacity: 1;
+  /* Override hero p opacity */
+}
+
+.priceDisplay {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  color: var(--foreground);
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 600;
+  vertical-align: top;
+  margin-right: 0.2rem;
+}
+
+.amount {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.period {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  margin-left: 0.4rem;
+  font-weight: 500;
+}
+
+.savings {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #10b981;
+  /* Green for savings */
+  min-height: 1.5em;
+  /* Prevent layout shift */
+}
+
+/* Features */
+.featureList {
+  text-align: left;
+  margin: 2.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: var(--foreground);
+}
+
+.checkIcon {
+  color: var(--primary);
+  /* Or a brand color */
+  flex-shrink: 0;
+}
+
+.ctaButton {
+  width: 100%;
+  background: var(--primary);
+  color: var(--primary-fg);
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  opacity: 0.95;
+}
+
+.guarantee {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Logo in header for brand consistency */
+.cardLogo {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  opacity: 0.2;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .pricingCard {
+    padding: 2rem;
+  }
+
+  .amount {
+    font-size: 3rem;
+  }
+
+  .toggleContainer {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.4rem;
+  }
+
+  .toggleBtn {
+    min-width: auto;
+    flex: 1;
+    padding: 0.6rem 0;
+  }
+}

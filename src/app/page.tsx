@@ -100,20 +100,17 @@ export default function LandingPage() {
             </div>
             <div className={styles.footerCol}>
               <h4>Product</h4>
-              <a href="#">Features</a>
-              <a href="#">Security</a>
-              <a href="#">Pricing</a>
+              <Link href="/#how-it-works">Features</Link>
+              <Link href="/pricing">Pricing</Link>
             </div>
             <div className={styles.footerCol}>
               <h4>Company</h4>
-              <a href="#">About</a>
-              <a href="#">Blog</a>
-              <a href="#">Careers</a>
+              <Link href="/about">About</Link>
             </div>
             <div className={styles.footerCol}>
               <h4>Legal</h4>
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
             </div>
           </div>
           <div className={styles.copyright}>

@@ -67,6 +67,30 @@ src/
 └── lib/                  # Utilities & Mock Data
 ```
 
+## Production Readiness & Integrations
+
+To move from mock data to production, you will need the following API keys and configurations:
+
+### 1. Email Providers (OAuth)
+*   **Google Cloud Console** (for Gmail):
+    *   Create a Project & Enable **Gmail API**.
+    *   Configure OAuth Consent Screen (Scopes: `https://www.googleapis.com/auth/gmail.readonly`, `https://www.googleapis.com/auth/gmail.modify`).
+    *   **Required**: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`.
+*   **Microsoft Azure** (for Outlook):
+    *   Register an App in **Azure Active Directory**.
+    *   Permissions (Graph API): `Mail.Read`, `Mail.ReadWrite`.
+    *   **Required**: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.
+
+### 2. AI Summarization
+*   **Groq Cloud Console**:
+    *   Create an account and generate an API Key.
+    *   **Required**: `GROQ_API_KEY`.
+
+### 3. Backend & Persistence
+*   **Supabase**:
+    *   Create a new project for Database & Auth.
+    *   **Required**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+
 ## Contributing
 
 We welcome contributions from the team. Please follow the standard PR workflow:
@@ -74,6 +98,17 @@ We welcome contributions from the team. Please follow the standard PR workflow:
 1.  Create a feature branch (`feature/amazing-feature`).
 2.  Commit your changes (Conventional Commits preferred).
 3.  Open a Pull Request against `main`.
+
+## The Economics of Lifetime Deals
+We are often asked: *"How can you offer a Lifetime Deal for $99 when AI costs money?"*
+
+The answer lies in **Model Efficiency**. We use Groq's Llama 3 8B engine for summarization, which offers incredible intelligence at a fraction of the cost of larger models.
+
+**The Math (Llama 3 8B Unit Economics):**
+*   **Cost per 1,000 Emails**: ~$0.03
+*   **Yearly Cost (Heavy User, 18k emails/yr)**: ~$0.54
+
+A $99 lifetime payment covers roughly **183 years** of heavy usage. This allows us to offer a sustainable "Founder's Offer" while generating the cash flow needed to build the future of Unsub AI.
 
 ---
 

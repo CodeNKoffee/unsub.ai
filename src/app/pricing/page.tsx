@@ -1,138 +1,183 @@
-"use client";
+'use client';
 
-import React, { useState } from 'react';
-import Navbar from "@/components/Navbar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Check, Info, Monitor } from 'lucide-react';
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { motion, LayoutGroup } from 'framer-motion';
+import { Check, ShieldCheck, Zap, Mail } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import styles from './Pricing.module.css';
+
+type BillingPeriod = 'annual' | 'monthly' | 'lifetime';
 
 export default function PricingPage() {
-  const [billingCycle, setBillingCycle] = useState("annually");
+  const [billing, setBilling] = useState<BillingPeriod>('annual');
 
-  const plans = [
-    {
-      name: "BASIC",
-      price: {
-        annually: "3.35",
-        monthly: "5.35", // higher for monthly
-        onetime: "39.95"
-      },
-      billedText: {
-        annually: "Billed $40.20 per year",
-        monthly: "Billed monthly",
-        onetime: "One-time payment"
-      },
-      features: [
-        "Scan unlimited emails",
-        "Clean up to 500 subscriptions",
-        "Basic AI summaries",
-        "Outlook & Gmail support"
-      ]
+  const plans = {
+    annual: {
+      price: '2.42',
+      period: '/ month',
+      subtext: '$29 billed annually',
+      savings: 'Save 50%',
     },
-    {
-      name: "PLUS",
-      popular: true,
-      price: {
-        annually: "5.45",
-        monthly: "9.95",
-        onetime: "65.40"
-      },
-      billedText: {
-        annually: "Billed $65.40 per year",
-        monthly: "Billed monthly",
-        onetime: "One-time payment"
-      },
-      features: [
-        "Everything in Basic",
-        "Advanced AI Insights",
-        "Priority Support",
-        "Multiple Accounts (up to 3)",
-        "Auto-Unsubscribe Rules"
-      ]
-    }
-  ];
+    monthly: {
+      price: '4.99',
+      period: '/ month',
+      subtext: 'Cancel anytime',
+      savings: '',
+    },
+    lifetime: {
+      price: '99',
+      period: ' one-time',
+      subtext: 'Pay once, yours forever',
+      savings: "Limited Founder's Offer",
+    },
+  };
+
+  const handleBuy = () => {
+    // Placeholder for actual checkout integration
+    console.log(`Checkout initiated for ${billing} plan`);
+    alert(`Redirecting to checkout for ${billing} plan...`);
+  };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className={styles.pageWrapper}>
       <Navbar />
-      <div className="max-w-5xl mx-auto py-10 px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Pick your Unsub AI plan</h1>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-8">
-            {/* Billing Toggle */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-sm font-semibold flex items-center gap-1">
-                Billed
-                <Info size={14} className="text-muted-foreground" />
-              </span>
-              <Tabs defaultValue="annually" className="w-auto" onValueChange={setBillingCycle}>
-                <TabsList className="grid w-full grid-cols-3 bg-muted rounded-full p-1 h-auto">
-                  <TabsTrigger value="annually" className="rounded-full px-6 py-2">Annually</TabsTrigger>
-                  <TabsTrigger value="monthly" className="rounded-full px-6 py-2">Monthly</TabsTrigger>
-                  <TabsTrigger value="onetime" className="rounded-full px-6 py-2">One Time</TabsTrigger>
-                </TabsList>
-              </Tabs>
+      <main className={styles.container}>
+        <div className={styles.hero}>
+          <h1>
+            A small price to<br />
+            declutter your inbox.
+          </h1>
+          <p>
+            Choose the plan that fits your workflow.
+            All plans include full access to every feature.
+          </p>
+
+          <LayoutGroup>
+            <div className={styles.toggleContainer}>
+              {/* Animated Background Pill */}
+              <motion.div
+                layoutId="activePill"
+                className={styles.activePill}
+                style={{
+                  position: 'absolute',
+                  background: 'var(--background)',
+                  borderRadius: '99px',
+                  inset: '4px',
+                  width: 'calc(33.33% - 6px)',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                  zIndex: 1,
+                  // Simple left positioning based on index
+                  left: billing === 'annual' ? '4px' : billing === 'monthly' ? 'calc(33.33% + 2px)' : 'auto',
+                  right: billing === 'lifetime' ? '4px' : 'auto'
+                }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              />
+
+              {/* We need a cleaner way to handle the pill position since simple CSS calc implies fixed widths or equal flex.
+                   Let's use a simpler approach: just map buttons and use layoutId on the active background. 
+               */}
             </div>
 
-            {/* Devices Toggle (Mock) */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-sm font-semibold">Devices</span>
-              <div className="bg-muted rounded-full p-1 flex">
-                <Button variant="secondary" size="sm" className="rounded-full px-6 shadow-sm bg-background text-foreground hover:bg-background">1</Button>
-                <Button variant="ghost" size="sm" className="rounded-full px-6 text-muted-foreground opacity-50 cursor-not-allowed" disabled>2</Button>
-                <Button variant="ghost" size="sm" className="rounded-full px-6 text-muted-foreground opacity-50 cursor-not-allowed" disabled>5</Button>
-              </div>
+            {/* RETRYING TOGGLE STRUCTURE with simpler map for layoutId support */}
+            <div className={styles.toggleContainer} style={{ display: 'inline-flex', position: 'relative', background: 'var(--secondary)', padding: '4px', borderRadius: '99px', gap: '0' }}>
+              {(['annual', 'monthly', 'lifetime'] as const).map((period) => (
+                <button
+                  key={period}
+                  onClick={() => setBilling(period)}
+                  className={styles.toggleBtn}
+                  style={{ position: 'relative', zIndex: 2, background: 'transparent' }}
+                  data-active={billing === period}
+                >
+                  {period === 'annual' && 'Annually'}
+                  {period === 'monthly' && 'Monthly'}
+                  {period === 'lifetime' && 'Lifetime'}
+
+                  {billing === period && (
+                    <motion.div
+                      layoutId="toggleHighlight"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundColor: 'var(--background)',
+                        borderRadius: '99px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        zIndex: -1
+                      }}
+                      transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                </button>
+              ))}
             </div>
-          </div>
-        </div>
+          </LayoutGroup>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {plans.map((plan) => (
-            <Card key={plan.name} className={`relative border-2 ${plan.popular ? 'border-primary/20 shadow-lg' : 'border-border'}`}>
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  Best Value
-                </div>
-              )}
-              <CardHeader className="text-center pb-2">
-                <div className={`mx-auto w-fit px-3 py-1 rounded bg-blue-100 text-blue-700 font-bold text-xs mb-4 uppercase tracking-wider ${plan.popular ? 'bg-green-100 text-green-700' : ''}`}>
-                  {plan.name}
-                </div>
-                <CardTitle className="text-5xl font-bold flex items-end justify-center gap-1">
-                  <span className="text-2xl font-normal text-muted-foreground">$</span>
-                  {plan.price[billingCycle as keyof typeof plan.price]}
-                  {billingCycle !== 'onetime' && <span className="text-lg font-normal text-muted-foreground">/month</span>}
-                </CardTitle>
-                <CardDescription className="mt-2 text-muted-foreground">
-                  {plan.billedText[billingCycle as keyof typeof plan.billedText]}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="mt-6">
-                <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-6 rounded-xl shadow-md transition-all hover:-translate-y-1">
-                  Buy Now
-                </Button>
-                <div className="mt-8 space-y-4">
-                  {plan.features.map((feature) => (
-                    <div key={feature} className="flex items-start gap-3">
-                      <div className={`mt-1 rounded-full p-0.5 ${plan.popular ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'}`}>
-                        <Check size={12} strokeWidth={4} />
-                      </div>
-                      <span className="text-sm">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+          <motion.div
+            className={styles.pricingCard}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            {billing === 'annual' && <div className={styles.popularBadge}>Most Popular</div>}
 
-        <p className="text-center text-muted-foreground text-sm mt-12 bg-muted/30 p-4 rounded-lg">
-          Secure payment via DodoPayments. 30-day money-back guarantee.
-        </p>
-      </div>
+            <div className={styles.cardHeader}>
+              <div className={styles.cardLogo}>▼</div>
+              <h2>Standard Plan</h2>
+              <p>Everything you need to regain control.</p>
+            </div>
+
+            <div className={styles.priceDisplay}>
+              <span className={styles.currency}>$</span>
+              <motion.span
+                key={billing} // Re-animate on change
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className={styles.amount}
+              >
+                {plans[billing].price}
+              </motion.span>
+              <span className={styles.period}>{plans[billing].period}</span>
+            </div>
+
+            <motion.div
+              className={styles.savings}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              key={`savings-${billing}`}
+            >
+              {plans[billing].savings}
+            </motion.div>
+
+            <div className={styles.featureList}>
+              <FeatureItem text="Connect Unlimited Gmail & Outlook" icon={<Mail size={20} />} />
+              <FeatureItem text="One-Click Bulk Unsubscribe" icon={<Zap size={20} />} />
+              <FeatureItem text="AI Content Summaries (Groq)*" icon={<Zap size={20} />} />
+              <FeatureItem text="Privacy First (Local Processing)" icon={<ShieldCheck size={20} />} />
+              <FeatureItem text="Priority Support" icon={<Check size={20} />} />
+            </div>
+
+            <button className={styles.ctaButton} onClick={handleBuy}>
+              Buy Now
+            </button>
+            <div className={styles.guarantee}>
+              <ShieldCheck size={14} /> 30-day money-back guarantee
+            </div>
+
+            <p style={{ marginTop: '1.5rem', fontSize: '0.75rem', opacity: 0.5, fontStyle: 'italic' }}>
+              * Subject to fair use policy (approx. 5,000 summaries/mo) to prevent abuse.
+            </p>
+          </motion.div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function FeatureItem({ text, icon }: { text: string; icon: React.ReactNode }) {
+  return (
+    <div className={styles.featureItem}>
+      <span className={styles.checkIcon}>{icon}</span>
+      <span>{text}</span>
     </div>
   );
 }
